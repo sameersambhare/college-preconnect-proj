@@ -24,6 +24,18 @@ const Navbar = () => {
           <Link href="/onboarding" className="text-sm text-muted-foreground hover:text-foreground">
             Profile
           </Link>
+          <Link href="/friends" className="text-sm text-muted-foreground hover:text-foreground">
+            Friends
+          </Link>
+          <Link href="/requests" className="text-sm text-muted-foreground hover:text-foreground">
+            Requests
+          </Link>
+          <Link href="/notifications" className="text-sm text-muted-foreground hover:text-foreground">
+            Notifications
+          </Link>
+          <Link href="/chats" className="text-sm text-muted-foreground hover:text-foreground">
+            Chats
+          </Link>
           <Link href="/contactus" className="text-sm text-muted-foreground hover:text-foreground">
             Contact Us
           </Link>
@@ -39,7 +51,9 @@ const Navbar = () => {
         </Button>
         </SignedOut>
         <SignedIn>
-        <SignOutButton/>
+          <div className="cursor-pointer">
+          <SignOutButton/>
+          </div>
         <UserButton/>
         </SignedIn>
       </div>

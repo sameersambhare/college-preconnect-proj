@@ -86,3 +86,108 @@ export async function sendConnectionRequest(senderId:string,receiverId:string){
         throw new Error(`Error in sending connection request: ${err.message}`);
     }
 }
+
+
+export async function fetchConnections(userId:string){
+    try{
+        await connectDatabase();
+        const user = await userModel.findById(userId).populate({
+    path: "connections",
+    select: "_id name email collegename branch year"
+  });
+  const connections = user?.connections || [];
+  console.log(connections);
+  return JSON.parse(JSON.stringify(connections));
+    }
+    catch(err:any){
+        throw new Error(`Error in fetching connections: ${err.message}`);
+    }
+}
+
+export async function showsendRequests(userId:string){
+    try{
+        await connectDatabase();
+        const user=await userModel.findById(userId).select("sendRequests").populate({
+            path:"sendRequests",
+            select:"_id name email collegename branch year"
+        })
+        const requests=user?.sendRequests || [];
+        return JSON.parse(JSON.stringify(user?.sendRequests))
+    }
+    catch(err:any){
+        throw new Error(`Error in showing send requests: ${err.message}`);
+    }
+}
+
+export async function fetchNotifications(userId:string){
+    try{
+        await connectDatabase();
+        const user=await userModel.findById(userId).select("receivedRequests").populate({
+            path:"receivedRequests",
+            select:"_id name email collegename branch year"
+        })
+        const receivedRequests=user?.receivedRequests || [];
+        if(receivedRequests.length>0){
+            return JSON.parse(JSON.stringify(receivedRequests));
+        }
+        else{
+            return {success:false, message:"No notifications found"};
+        }
+    }
+    catch(err:any){
+        throw new Error(`Error in fetching notifications: ${err.message}`);
+    }
+}
+
+export async function acceptConnectionRequest(senderId:string,receiverId:string){
+    try{
+        await connectDatabase();
+        // Add both users to each other's connections
+        await userModel.findByIdAndUpdate(senderId,{
+            $push:{
+                connections:receiverId,
+            },
+            $pull: {
+                sendRequests: receiverId
+            }
+        });
+        await userModel.findByIdAndUpdate(receiverId,{
+            $push:{
+                connections:senderId,
+            },
+            $pull: {
+                receivedRequests: senderId
+            }
+        });
+        
+        return {success:true, message:"Connection request accepted"};
+    }
+    catch(err:any){
+        throw new Error(`Error in accepting connection request: ${err.message}`);
+    }
+}
+
+export async function declineConnectionRequest(senderId:string, receiverId:string){
+    try{
+        await connectDatabase();
+        
+        // Remove request from sender's sendRequests
+        await userModel.findByIdAndUpdate(senderId, {
+            $pull: {
+                sendRequests: receiverId
+            }
+        });
+        
+        // Remove request from receiver's receivedRequests
+        await userModel.findByIdAndUpdate(receiverId, {
+            $pull: {
+                receivedRequests: senderId
+            }
+        });
+        
+        return {success:true, message:"Connection request declined"};
+    }
+    catch(err:any){
+        throw new Error(`Error in declining connection request: ${err.message}`);
+    }
+}
