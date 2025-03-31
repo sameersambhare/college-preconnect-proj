@@ -2,14 +2,6 @@
 import userModel from "../models/user";
 import {connectDatabase} from "../connectdb";
 import { revalidatePath } from "next/cache";
-interface UserData{
-    name:string;
-    email:string;
-    collegename:string;
-    branch:string;
-    year:number;
-    onboarded:boolean;
-}
 export async function fetchUser(userEmail:string){
     try{
         await connectDatabase();
