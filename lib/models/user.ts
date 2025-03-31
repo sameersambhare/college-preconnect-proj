@@ -20,6 +20,24 @@ const UserSchema=new mongoose.Schema({
         type:Number,
         required:true,  
     },
+    sendRequests:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'USER',
+        }
+    ],
+    receivedRequests:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'USER',
+        }
+    ],
+    connections:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'USER',
+        }
+    ],
     onboarded:{
         type:Boolean,
         default:false,
