@@ -15,17 +15,17 @@ const Navbar = () => {
           <Link href="/"className="text-sm text-muted-foreground hover:text-foreground">
             Home
           </Link>
-          <Link href="#" className="text-sm text-muted-foreground hover:text-foreground">
+          <Link href="/communities" className="text-sm text-muted-foreground hover:text-foreground">
             Communities
           </Link>
-          <Link href="#" className="text-sm text-muted-foreground hover:text-foreground">
-            Roommate Finder
+          <Link href="/students" className="text-sm text-muted-foreground hover:text-foreground">
+            Students
           </Link>
-          <Link href="#" className="text-sm text-muted-foreground hover:text-foreground">
-            Projects
+          <Link href="/onboarding" className="text-sm text-muted-foreground hover:text-foreground">
+            Profile
           </Link>
-          <Link href="#" className="text-sm text-muted-foreground hover:text-foreground">
-            Testimonials
+          <Link href="/contactus" className="text-sm text-muted-foreground hover:text-foreground">
+            Contact Us
           </Link>
         </div>
       </div>

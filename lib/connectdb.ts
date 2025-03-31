@@ -5,7 +5,7 @@ export async function connectDatabase(){
     if(alreadyConnected){
         return;
     }
-    const uri=`mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.zqzqy.mongodb.net/`
+    const uri=`mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@usercluster.enc94.mongodb.net/?retryWrites=true&w=majority&appName=UserCluster`
     await mongoose.connect(uri)
     mongoose.connection.on('connected',()=>{
         console.log('Successfully Connected to database.')
