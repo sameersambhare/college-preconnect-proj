@@ -1,7 +1,9 @@
 import React from 'react'
 import Link from 'next/link'
 import { Button } from './ui/button'
-
+import {SignOutButton, UserButton} from '@clerk/nextjs'
+import {SignedIn} from '@clerk/nextjs'
+import { SignedOut } from '@clerk/nextjs'
 const Navbar = () => {
   return (
     <nav className="w-full py-4 px-6 flex items-center justify-between border-b">
@@ -10,7 +12,7 @@ const Navbar = () => {
          College Preconnect
         </Link>
         <div className="hidden md:flex gap-6">
-          <Link href="#" className="text-sm text-muted-foreground hover:text-foreground">
+          <Link href="/"className="text-sm text-muted-foreground hover:text-foreground">
             Home
           </Link>
           <Link href="#" className="text-sm text-muted-foreground hover:text-foreground">
@@ -28,12 +30,18 @@ const Navbar = () => {
         </div>
       </div>
       <div className="flex items-center gap-4">
+        <SignedOut>
         <Button variant="outline" size="sm">
-          Sign In
+          <Link href="/sign-in">Sign In</Link>
         </Button>
         <Button size="sm">
-          Sign Up
+          <Link href="/sign-up">Sign Up</Link>
         </Button>
+        </SignedOut>
+        <SignedIn>
+        <SignOutButton/>
+        <UserButton/>
+        </SignedIn>
       </div>
     </nav>
   )
