@@ -1,103 +1,178 @@
-import Image from "next/image";
+import React from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import Card from '@/components/Card'
 
-export default function Home() {
+const features = [
+  {
+    id: 1,
+    title: 'Find Your Perfect Roommate Today',
+    description: 'Our smart matching algorithm connects you with like-minded peers.'
+  },
+  {
+    id: 2,
+    title: 'Engage in Collaborative Community Spaces',
+    description: 'Share resources and support each other academically.'
+  },
+  {
+    id: 3,
+    title: 'Easily Share Notes and Resources',
+    description: 'Access a wealth of shared knowledge at your fingertips.'
+  }
+]
+
+const page = () => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div>
+      <main>
+        {/*--------------------- First Page----- ------------ */}
+        <section className='FirstPage w-full h-screen flex justify-between items-center'>
+          <div className="text-box w-1/2 p-16 flex flex-col gap-6">
+            <h1 className="text-4xl font-bold"> Connect, Collaborate, and Thrive in Engineering</h1>
+            <p className="text-lg text-gray-600">Welcome to College PreConnect, where newly enrolled engineering students can forge lasting connections from day one. Our mission is to create a vibrant community that supports your academic journey and personal growth</p>
+            <div className="flex gap-4 mt-4">
+              <Button className="bg-orange-500 hover:bg-orange-600 px-6 py-2">Join Now</Button>
+              <Button variant="outline" className="border-gray-300 text-gray-700 px-6 py-2">Learn More</Button>
+            </div>
+          </div>
+          <div className="image-box h-screen">
+            <Image src={'/assets/banner1.png'} alt='banner1' width={500} height={500} className="h-full object-cover"></Image>
+          </div>
+        </section>
+        {/*--------------------- Second Page----- ------------ */}
+        <section className='secondPage w-full h-screen p-20'>
+            <h4 className="text-orange-500 font-medium mb-4">Connect</h4>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+            <div className="second-text-box flex justify-between gap-12 mt-4">
+              <div className="w-1/3">
+                <h1 className="text-3xl font-bold leading-tight">Discover Your College Community Today</h1>
+              </div>
+              <div className="w-2/3">
+                <p className="text-gray-600 text-lg"> At College PreConnect, we empower newly enrolled engineering students to build lasting connections. Our platform facilitates roommate matching based on shared interests and preferences, ensuring a comfortable living environment. Join community spaces to collaborate on projects, share notes, and tackle academic challenges together</p>
+              </div>
+            </div>
+            
+            <div className="feature-cards grid grid-cols-3 gap-8 mt-16">
+              {features.map((feature) => (
+                <Card key={feature.id} title={feature.title} description={feature.description} />
+              ))}
+            </div>
+
+            <div className="flex gap-4 mt-16">
+            <Button className=" px-6 py-2">Join Now</Button>
+           <Link href='/'>Learn More</Link>
+            </div>
+        </section>
+        {/*--------------------- Third Page----- ------------ */}
+        <section className='thirdPage w-full h-screen p-20 flex justify-between items-center'>
+          <div className="third-page-text-box w-1/2 flex flex-col gap-6">
+            <h4 className="text-orange-500 font-medium mb-2">Connect</h4>
+            <h1 className="text-3xl font-bold leading-tight mb-4">Find Your Perfect Roommate Today</h1>
+            <p className="text-gray-600 text-lg mb-8">Our roommate matching feature helps you connect with fellow students based on location and shared interests. Say goodbye to random assignments and hello to a living situation that feels like home</p>
+            <div className="flex gap-8">
+              <div className="box-1">
+                <h2 className="text-3xl font-bold text-orange-500 mb-2">50%</h2>
+                <p className="text-gray-600">Match with students who share your passions</p>
+              </div>
+              <div className="box-2">
+                <h2 className="text-3xl font-bold text-orange-500 mb-2">50%</h2>
+                <p className="text-gray-600">Easily filter by location and interests</p>
+              </div>
+            </div>
+          </div>
+          <div className="image-box w-1/2 h-screen flex justify-center items-center">
+            <Image src={'/assets/banner3.png'} alt='banner2' width={700} height={700}></Image>
+          </div>
+        </section>
+        {/*--------------------- Fourth Page----- ------------ */}
+        <section className='fourthPage w-full h-screen p-20 bg-gray-50'>
+          <div className="fourth-page-container flex gap-8">
+            <div className="header-text flex flex-col gap-2">
+              <h4 className="text-orange-500 font-medium">Engage, Collaborate, and Discover</h4>
+              <h1 className="text-3xl font-bold leading-tight">Your Academic Community Awaits</h1>
+            </div>
+            <div className="w-1/2 flex items-center justify-center">
+                <p className="text-gray-600 text-lg">Connect with peers who share your academic interests and goals. Our community spaces allow you to collaborate on projects, share resources, and build lasting relationships that enhance your college experience.</p>
+            </div>
+          </div>
+              <div className="image-box w-full pt-16 flex justify-center items-baseline">
+                <Image src={'/assets/Banner4.png'} alt='student community' width={800} height={800} className="rounded-lg object-cover"></Image>
+          </div>
+        </section>
+        {/*--------------------- Testimonials Section----- ------------ */}
+        <section className='testimonialsPage w-full py-20 bg-gray-50'>
+          <div className="testimonials-container max-w-6xl mx-auto flex flex-col gap-8">
+            <h1 className="text-3xl font-bold leading-tight text-center mb-12">Student Testimonials</h1>
+            
+            <div className="testimonials-grid grid grid-cols-3 gap-8">
+              <div className="testimonial flex flex-col gap-4 p-6 bg-white rounded-lg shadow-sm">
+                <div className="stars flex">
+                  {"★★★★★".split("").map((star, i) => (
+                    <span key={i} className="text-yellow-400">{star}</span>
+                  ))}
+                </div>
+                <p className="text-gray-600">Found my perfect roommate and study group in the first week. This platform made my transition to college so much easier!</p>
+                <div className="user flex items-center gap-3 mt-4">
+                  <div className="avatar w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
+                    <Image src={'/assets/avatar.png'} alt='avatar1' width={50} height={50}></Image>
+                  </div>
+                  <div className="user-info">
+                    <h4 className="font-medium">Sarah J.</h4>
+                    <p className="text-sm text-gray-500">Computer Science</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="testimonial flex flex-col gap-4 p-6 bg-white rounded-lg shadow-sm">
+                <div className="stars flex">
+                  {"★★★★★".split("").map((star, i) => (
+                    <span key={i} className="text-yellow-400">{star}</span>
+                  ))}
+                </div>
+                <p className="text-gray-600">The community spaces helped me find study partners and friends with similar interests. Highly recommend!</p>
+                <div className="user flex items-center gap-3 mt-4">
+                  <div className="avatar w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
+                  <Image src={'/assets/avatar.png'} alt='avatar1' width={50} height={50}></Image>
+                  </div>
+                  <div className="user-info">
+                    <h4 className="font-medium">Michael T.</h4>
+                    <p className="text-sm text-gray-500">Electrical Engineering</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="testimonial flex flex-col gap-4 p-6 bg-white rounded-lg shadow-sm">
+                <div className="stars flex">
+                  {"★★★★★".split("").map((star, i) => (
+                    <span key={i} className="text-yellow-400">{star}</span>
+                  ))}
+                </div>
+                <p className="text-gray-600">The resource sharing feature saved me countless hours of research. This platform is a game-changer!</p>
+                <div className="user flex items-center gap-3 mt-4">
+                  <div className="avatar w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
+                  <Image src={'/assets/avatar.png'} alt='avatar1' width={50} height={50}></Image>
+                  </div>
+                  <div className="user-info">
+                    <h4 className="font-medium">Jason K.</h4>
+                    <p className="text-sm text-gray-500">Mechanical Engineering</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/*--------------------- Call to Action Section----- ------------ */}
+        <section className='ctaPage w-full py-16'>
+          <div className="cta-container max-w-6xl mx-auto flex justify-between items-center">
+            <h2 className="text-2xl font-bold">Connect With Your Future Peers</h2>
+            <Button className="bg-orange-500 hover:bg-orange-600 px-6 py-2">Join Now</Button>
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
-  );
+  )
 }
+
+export default page
