@@ -1,20 +1,10 @@
 import React from 'react'
 import { fetchUserById } from '@/lib/actions/user.actions'
-import Image from 'next/image'
 import { currentUser } from '@clerk/nextjs/server'
-
-interface PageProps {
-  params: {
-    id: string
-  }
-}
-
-const Page = async ({ params }: PageProps) => {
+const Page = async ({ params }: {params:{id:string}}) => {
   const {id}=await params;
   const userInfo = await fetchUserById(id)
   const currentUserInfo = await currentUser()
-  const currentUserEmail = currentUserInfo?.emailAddresses[0]?.emailAddress
-
   if (!userInfo) {
     return (
       <div className="max-w-md mx-auto p-6">
