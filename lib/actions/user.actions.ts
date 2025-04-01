@@ -191,3 +191,16 @@ export async function declineConnectionRequest(senderId:string, receiverId:strin
         throw new Error(`Error in declining connection request: ${err.message}`);
     }
 }
+
+
+
+export async function fetchUserById(userId:string){
+try{
+    await connectDatabase();
+    const user= await userModel.findById(userId);
+    return JSON.parse(JSON.stringify(user));
+}
+catch(err:any){
+    throw new Error(`Error in fetching  the user by id: ${err.message}`)
+}
+}
