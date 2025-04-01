@@ -10,7 +10,8 @@ interface PageProps {
 }
 
 const Page = async ({ params }: PageProps) => {
-  const userInfo = await fetchUserById(params.id)
+  const {id}=await params;
+  const userInfo = await fetchUserById(id)
   const currentUserInfo = await currentUser()
   const currentUserEmail = currentUserInfo?.emailAddresses[0]?.emailAddress
 
