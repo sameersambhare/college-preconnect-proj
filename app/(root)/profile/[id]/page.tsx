@@ -1,7 +1,10 @@
 import React from 'react'
 import { fetchUserById } from '@/lib/actions/user.actions'
 import { currentUser } from '@clerk/nextjs/server'
-const Page = async ({ params }: {params:{id:string}}) => {
+
+
+type tParams=Promise<{id:string}>
+const Page = async ({ params }: {params:tParams}) => {
   const {id}=await params;
   const userInfo = await fetchUserById(id)
   const currentUserInfo = await currentUser()
