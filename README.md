@@ -153,7 +153,7 @@ We welcome contributions to enhance College PreConnect. Please follow these step
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed. See the LICENSE file for details.
 
 ## Contact
 
