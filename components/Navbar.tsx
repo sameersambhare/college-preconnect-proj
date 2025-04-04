@@ -12,14 +12,14 @@ import { redirect } from 'next/navigation'
 const Navbar =async () => {
   let isLoggedin =false;
   let notify=false;
-  const user=await currentUser()
-  if(!user) return null
-  const email=user?.emailAddresses[0].emailAddress
+  const user=await currentUser();
+  if(user){
+  const email=user?.emailAddresses[0].emailAddress;
   const userInfo=await fetchUser(email)
-  if(!userInfo?.onboarded) redirect('/onboarding')
   if(userInfo?.connections?.length>=1){
     console.log(userInfo?.connections?.length); 
     notify=true
+  }
   }
   if(user) isLoggedin=true;
   return (

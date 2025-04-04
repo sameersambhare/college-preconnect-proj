@@ -1,16 +1,56 @@
 "use client"
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { User } from '@/lib/models/user'
+import { pusherClient } from '@/lib/pusher'
+import { sendMessage, fetchMessages } from '@/lib/actions/message.actions'
 
+interface User{
+  name:string;
+  profileimage:string,
+  _id:string,
+  collegename:string;
+
+}
 interface ChatUIProps {
   friends: User[]
   currentUserId: string
 }
-
 export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
+  const [message,setMessage]=useState('');
   const [selectedFriend, setSelectedFriend] = useState<User | null>(null)
+  const [messages, setMessages] = useState<{ text: string; sender: string; receiver: string; createdAt: Date }[]>([])
+
+  const onSendMessage=async()=>{
+    if (!selectedFriend) return;
+    const messageObj={
+      text:message,
+      sender:currentUserId,
+      receiver:selectedFriend._id,
+    }
+    await sendMessage(messageObj)
+    setMessage('')
+  }
+  useEffect(()=>{
+    pusherClient.subscribe('college-preconnect')
+    pusherClient.bind('upcoming-message',(message: { text: string; sender: string; receiver: string; createdAt: Date })=>{
+      setMessages((prev)=>[...prev,message])
+    }) 
+    return () => {
+      pusherClient.unsubscribe('college-preconnect')
+      pusherClient.unbind('upcoming-message')
+    }
+  },[])
+
+  useEffect(() => {
+    const loadMessages = async () => {
+      if (selectedFriend) {
+        const messages = await fetchMessages(currentUserId, selectedFriend._id);
+        setMessages(messages);
+      }
+    };
+    loadMessages();
+  }, [selectedFriend, currentUserId]);
 
   return (
     <div className="flex h-[calc(100vh-80px)]">
@@ -68,19 +108,50 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
             {/* Messages Area */}
             <div className="flex-1 p-4 overflow-y-auto">
               <div className="space-y-4">
-                {/* Sample message - Replace with actual messages */}
-                <div className="flex items-start gap-2">
-                  <div className="bg-gray-100 rounded-lg p-3 max-w-[70%]">
-                    <p className="text-sm">Hello! How are you?</p>
-                    <span className="text-xs text-gray-500">10:30 AM</span>
+                {messages.map((msg, index) => (
+                  <div
+                    key={index}
+                    className={`flex items-start gap-2 ${
+                      msg.sender === currentUserId ? 'justify-end' : ''
+                    }`}
+                  >
+                    {msg.sender !== currentUserId && (
+                      <div className="relative w-8 h-8">
+                        <Image
+                          src={selectedFriend?.profileimage || "/assets/avatar.png"}
+                          alt={selectedFriend?.name || "Receiver"}
+                          fill
+                          className="rounded-full object-cover"
+                        />
+                      </div>
+                    )}
+                    <div
+                      className={`rounded-lg p-3 max-w-[70%] ${
+                        msg.sender === currentUserId
+                          ? 'bg-orange-500 text-white'
+                          : 'bg-gray-100'
+                      }`}
+                    >
+                      <p className="text-sm">{msg.text}</p>
+                      <span className="text-xs text-gray-500">
+                        {new Date(msg.createdAt).toLocaleTimeString([], {
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })}
+                      </span>
+                    </div>
+                    {msg.sender === currentUserId && (
+                      <div className="relative w-8 h-8">
+                        <Image
+                          src={friends.find(f => f._id === currentUserId)?.profileimage || "/assets/avatar.png"}
+                          alt="Sender"
+                          fill
+                          className="rounded-full object-cover"
+                        />
+                      </div>
+                    )}
                   </div>
-                </div>
-                <div className="flex items-start gap-2 justify-end">
-                  <div className="bg-orange-500 text-white rounded-lg p-3 max-w-[70%]">
-                    <p className="text-sm">I'm good, thanks! How about you?</p>
-                    <span className="text-xs text-white/80">10:32 AM</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
@@ -89,10 +160,20 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
               <div className="flex items-center gap-2">
                 <input
                   type="text"
+                  value={message}
                   placeholder="Type a message..."
+                  onChange={(e) => setMessage(e.target.value)}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      onSendMessage()
+                    }
+                  }}
                   className="flex-1 p-2 border border-gray-200 rounded-lg focus:outline-none focus:border-orange-500"
                 />
-                <button className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">
+                <button
+                  className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600"
+                  onClick={onSendMessage}
+                >
                   Send
                 </button>
               </div>
