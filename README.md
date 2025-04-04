@@ -159,6 +159,6 @@ This project is licensed. See the LICENSE file for details.
 
 For inquiries or support, please contact:
 
-Project Maintainer - maintainer@example.com
+Project Maintainer - sameersambhare@gmail.com
 
-Project Repository: [https://github.com/yourusername/college-preconnect](https://github.com/yourusername/college-preconnect)
+Project Repository: [https://github.com/yourusername/college-preconnect](https://github.com/sameersambhare/college-preconnect-proj)
