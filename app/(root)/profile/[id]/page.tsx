@@ -47,12 +47,12 @@ const Page = async ({ params }: {params:tParams}) => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-4 md:p-6">
       <div className="bg-white rounded-lg shadow-sm overflow-hidden">
         {/* Profile Header */}
-        <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-8">
-          <div className="flex flex-col md:flex-row items-center gap-6">
-            <div className="w-32 h-32 rounded-full bg-white flex items-center justify-center overflow-hidden border-4 border-white shadow-lg">
+        <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-4 md:p-8">
+          <div className="flex flex-col items-center gap-4 md:gap-6">
+            <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white flex items-center justify-center overflow-hidden border-4 border-white shadow-lg">
               {userInfo.profileimage ? (
                 <Image 
                   src={userInfo.profileimage} 
@@ -62,15 +62,15 @@ const Page = async ({ params }: {params:tParams}) => {
                   className="object-cover"
                 />
               ) : (
-                <span className="text-orange-500 font-bold text-5xl">
+                <span className="text-orange-500 font-bold text-3xl md:text-5xl">
                   {userInfo.name.charAt(0).toUpperCase()}
                 </span>
               )}
             </div>
-            <div className="text-center md:text-left">
-              <h1 className="text-3xl font-bold text-white">{userInfo.name}</h1>
-              <p className="text-orange-100 mt-1 text-lg">{userInfo.email}</p>
-              <div className="mt-4 flex flex-wrap gap-2 justify-center md:justify-start">
+            <div className="text-center">
+              <h1 className="text-2xl md:text-3xl font-bold text-white">{userInfo.name}</h1>
+              <p className="text-orange-100 mt-1 text-base md:text-lg">{userInfo.email}</p>
+              <div className="mt-4 flex flex-wrap gap-2 justify-center">
                 <Button variant="outline" className="bg-white/20 text-white border-white/30 hover:bg-white/30">
                   <Mail className="h-4 w-4 mr-2" />
                   Message
@@ -81,18 +81,18 @@ const Page = async ({ params }: {params:tParams}) => {
         </div>
 
         {/* Profile Content */}
-        <div className="p-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="p-4 md:p-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {/* Academic Information */}
-            <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Academic Information</h2>
+            <div className="space-y-4 md:space-y-6">
+              <h2 className="text-lg md:text-xl font-semibold text-gray-800 border-b pb-2">Academic Information</h2>
               
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 <div className="flex items-start gap-3">
                   <GraduationCap className="h-5 w-5 text-orange-500 mt-0.5" />
                   <div>
                     <h3 className="text-sm font-medium text-gray-500">College</h3>
-                    <p className="mt-1 text-gray-900">{userInfo.collegename || 'Not provided'}</p>
+                    <p className="mt-1 text-gray-900 text-sm md:text-base">{userInfo.collegename || 'Not provided'}</p>
                   </div>
                 </div>
                 
@@ -100,7 +100,7 @@ const Page = async ({ params }: {params:tParams}) => {
                   <BookOpen className="h-5 w-5 text-orange-500 mt-0.5" />
                   <div>
                     <h3 className="text-sm font-medium text-gray-500">Branch</h3>
-                    <p className="mt-1 text-gray-900">{userInfo.branch || 'Not provided'}</p>
+                    <p className="mt-1 text-gray-900 text-sm md:text-base">{userInfo.branch || 'Not provided'}</p>
                   </div>
                 </div>
                 
@@ -108,7 +108,7 @@ const Page = async ({ params }: {params:tParams}) => {
                   <Calendar className="h-5 w-5 text-orange-500 mt-0.5" />
                   <div>
                     <h3 className="text-sm font-medium text-gray-500">Year</h3>
-                    <p className="mt-1 text-gray-900">
+                    <p className="mt-1 text-gray-900 text-sm md:text-base">
                       {userInfo.year ? `${userInfo.year}${getYearSuffix(userInfo.year)} Year` : 'Not provided'}
                     </p>
                   </div>
@@ -117,15 +117,15 @@ const Page = async ({ params }: {params:tParams}) => {
             </div>
             
             {/* Personal Information */}
-            <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Personal Information</h2>
+            <div className="space-y-4 md:space-y-6">
+              <h2 className="text-lg md:text-xl font-semibold text-gray-800 border-b pb-2">Personal Information</h2>
               
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 <div className="flex items-start gap-3">
                   <User className="h-5 w-5 text-orange-500 mt-0.5" />
                   <div>
                     <h3 className="text-sm font-medium text-gray-500">Gender</h3>
-                    <p className="mt-1 text-gray-900">{capitalizeFirstLetter(userInfo.gender) || 'Not provided'}</p>
+                    <p className="mt-1 text-gray-900 text-sm md:text-base">{capitalizeFirstLetter(userInfo.gender) || 'Not provided'}</p>
                   </div>
                 </div>
                 
@@ -133,7 +133,7 @@ const Page = async ({ params }: {params:tParams}) => {
                   <Calendar className="h-5 w-5 text-orange-500 mt-0.5" />
                   <div>
                     <h3 className="text-sm font-medium text-gray-500">Date of Birth</h3>
-                    <p className="mt-1 text-gray-900">{formatDate(userInfo.dob)}</p>
+                    <p className="mt-1 text-gray-900 text-sm md:text-base">{formatDate(userInfo.dob)}</p>
                   </div>
                 </div>
                 
@@ -141,7 +141,7 @@ const Page = async ({ params }: {params:tParams}) => {
                   <Phone className="h-5 w-5 text-orange-500 mt-0.5" />
                   <div>
                     <h3 className="text-sm font-medium text-gray-500">Mobile</h3>
-                    <p className="mt-1 text-gray-900">{userInfo.mobile || 'Not provided'}</p>
+                    <p className="mt-1 text-gray-900 text-sm md:text-base">{userInfo.mobile || 'Not provided'}</p>
                   </div>
                 </div>
                 
@@ -149,7 +149,7 @@ const Page = async ({ params }: {params:tParams}) => {
                   <MapPin className="h-5 w-5 text-orange-500 mt-0.5" />
                   <div>
                     <h3 className="text-sm font-medium text-gray-500">Address</h3>
-                    <p className="mt-1 text-gray-900">{userInfo.address || 'Not provided'}</p>
+                    <p className="mt-1 text-gray-900 text-sm md:text-base">{userInfo.address || 'Not provided'}</p>
                   </div>
                 </div>
                 
@@ -157,7 +157,7 @@ const Page = async ({ params }: {params:tParams}) => {
                   <MapPin className="h-5 w-5 text-orange-500 mt-0.5" />
                   <div>
                     <h3 className="text-sm font-medium text-gray-500">Location</h3>
-                    <p className="mt-1 text-gray-900">
+                    <p className="mt-1 text-gray-900 text-sm md:text-base">
                       {[userInfo.city, userInfo.district, userInfo.state]
                         .filter(Boolean)
                         .join(', ') || 'Not provided'}

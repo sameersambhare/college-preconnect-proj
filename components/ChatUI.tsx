@@ -20,6 +20,7 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
   const [message,setMessage]=useState('');
   const [selectedFriend, setSelectedFriend] = useState<User | null>(null)
   const [messages, setMessages] = useState<{ text: string; sender: string; receiver: string; createdAt: Date }[]>([])
+  const [showFriendsList, setShowFriendsList] = useState(true);
 
   const onSendMessage=async()=>{
     if (!selectedFriend) return;
@@ -47,17 +48,34 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
       if (selectedFriend) {
         const messages = await fetchMessages(currentUserId, selectedFriend._id);
         setMessages(messages);
+        // On mobile, switch to chat view when a friend is selected
+        if (window.innerWidth < 768) {
+          setShowFriendsList(false);
+        }
       }
     };
     loadMessages();
   }, [selectedFriend, currentUserId]);
 
   return (
-    <div className="flex h-[calc(100vh-80px)]">
-      {/* Left Sidebar - Friends List */}
-      <div className="w-1/3 border-r border-gray-200 overflow-y-auto">
+    <div className="flex flex-col md:flex-row h-[calc(100vh-80px)]">
+      {/* Left Sidebar - Friends List (hidden on mobile when chat is open) */}
+      <div className={`${showFriendsList ? 'block' : 'hidden'} md:block w-full md:w-1/3 border-r border-gray-200 overflow-y-auto`}>
         <div className="p-4">
-          <h2 className="text-xl font-semibold mb-4">Messages</h2>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold">Messages</h2>
+            {selectedFriend && (
+              <button
+                className="md:hidden bg-gray-100 p-2 rounded-full"
+                onClick={() => setShowFriendsList(false)}
+              >
+                <span className="sr-only">View chat</span>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                </svg>
+              </button>
+            )}
+          </div>
           <div className="space-y-2">
             {friends.map((friend) => (
               <div
@@ -85,12 +103,20 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
         </div>
       </div>
 
-      {/* Right Section - Chat Area */}
-      <div className="flex-1 flex flex-col">
+      {/* Right Section - Chat Area (hidden on mobile when friend list is showing) */}
+      <div className={`${showFriendsList ? 'hidden' : 'block'} md:block flex-1 flex flex-col`}>
         {selectedFriend ? (
           <>
             {/* Chat Header */}
             <div className="p-4 border-b border-gray-200 flex items-center gap-3">
+              <button 
+                className="md:hidden mr-2"
+                onClick={() => setShowFriendsList(true)}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </button>
               <div className="relative w-10 h-10">
                 <Image
                   src={selectedFriend.profileimage || "/assets/avatar.png"}
@@ -133,7 +159,9 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
                       }`}
                     >
                       <p className="text-sm">{msg.text}</p>
-                      <span className="text-xs text-gray-500">
+                      <span className={`text-xs ${
+                        msg.sender === currentUserId ? 'text-white/80' : 'text-gray-500'
+                      }`}>
                         {new Date(msg.createdAt).toLocaleTimeString([], {
                           hour: '2-digit',
                           minute: '2-digit'
@@ -181,9 +209,15 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
           </>
         ) : (
           <div className="flex-1 flex items-center justify-center">
-            <div className="text-center">
+            <div className="text-center p-4">
               <h3 className="text-xl font-semibold text-gray-500">Select a friend to start chatting</h3>
               <p className="text-gray-400">Choose a conversation from the list</p>
+              <button 
+                className="md:hidden mt-4 px-4 py-2 bg-gray-100 rounded-lg text-gray-700"
+                onClick={() => setShowFriendsList(true)}
+              >
+                View Contacts
+              </button>
             </div>
           </div>
         )}
