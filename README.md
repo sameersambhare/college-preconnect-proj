@@ -161,4 +161,4 @@ For inquiries or support, please contact:
 
 Project Maintainer - sameersambhare@gmail.com
 
-Project Repository: [https://github.com/yourusername/college-preconnect](https://github.com/sameersambhare/college-preconnect-proj)
+Project Repository: [https://github.com/sameersambhare/college-preconnect-proj](https://github.com/sameersambhare/college-preconnect-proj)
