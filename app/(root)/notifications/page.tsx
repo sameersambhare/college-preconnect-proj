@@ -29,6 +29,7 @@ const NotificationsPage = async () => {
         
         await acceptConnectionRequest(senderId, receiverId);
         revalidatePath('/notifications');
+        redirect('/friends')
     }
     
   

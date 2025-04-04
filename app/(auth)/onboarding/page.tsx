@@ -8,9 +8,8 @@ const page = async () => {
   if(!user){
     redirect("/sign-in")
   }
-  const email=user?.emailAddresses[0].emailAddress
-  const userInfo=await fetchUser(email)
-  if(!userInfo?.onboarded) redirect('/onboarding')
+  const email=user?.emailAddresses[0].emailAddress;
+  const userInfo=await fetchUser(email);
   return (
     <div>
       <ProfileForm email={user?.emailAddresses[0].emailAddress}/>

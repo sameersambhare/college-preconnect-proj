@@ -1,9 +1,9 @@
+"use client"
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import Card from '@/components/Card'
-
 const features = [
   {
     id: 1,
@@ -21,7 +21,6 @@ const features = [
     description: 'Access a wealth of shared knowledge at your fingertips.'
   }
 ]
-
 const page = () => {
   return (
     <div>

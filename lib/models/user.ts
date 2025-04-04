@@ -7,6 +7,7 @@ const UserSchema=new mongoose.Schema({
     email:{
         type:String,
         required:true,
+        unique:true,
     },
     collegename:{
         type:String,
@@ -16,10 +17,45 @@ const UserSchema=new mongoose.Schema({
         type:String,
         required:true,
     },
+    mobile:{
+        type:String,
+        required:true,
+    },
+    address:{
+        type:String,
+        required:true,
+    },
+    city:{
+        type:String,
+        required:true,
+    },
+    state:{
+        type:String,
+    },
+    gender:{
+        type:String,
+    },
     year:{
         type:Number,
         required:true,  
     },
+    dob:{
+        required:true,
+        type:Date,
+    },
+    district:{
+        reuqired:true,
+        type:String,
+    },
+    profileimage:{
+        type:String,
+    },
+    communities:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Community",
+        },
+    ],
     sendRequests:[
         {
             type:mongoose.Schema.Types.ObjectId,
