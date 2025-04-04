@@ -134,6 +134,53 @@ For containerized deployment:
    docker run -p 3000:3000 --env-file .env.local college-preconnect
    ```
 
+### Docker Hub
+
+The application is available as a Docker image on Docker Hub:
+
+1. Pull the latest image
+   ```bash
+   docker pull samofficial007/college-preconnect:1.1
+   ```
+
+2. Run the container
+   ```bash
+   docker run -p 3000:3000 --env-file .env.local samofficial007/college-preconnect:1.1
+   ```
+
+### Building and Pushing Docker Images
+
+If you want to build and push your own version of the image:
+
+1. Build the Docker image with a tag
+   ```bash
+   docker build -t yourusername/college-preconnect:tag .
+   ```
+
+2. Log in to Docker Hub
+   ```bash
+   docker login
+   ```
+
+3. Push the image to Docker Hub
+   ```bash
+   docker push yourusername/college-preconnect:tag
+   ```
+
+### Docker Configuration
+
+The project includes the following Docker-related files:
+
+- `Dockerfile`: Defines the container configuration
+- `.dockerignore`: Specifies files and directories to exclude from the Docker build context
+
+The Dockerfile uses a multi-stage build process to optimize image size and build performance. It:
+- Uses Node.js 20 Alpine as the base image
+- Installs dependencies with npm
+- Copies application files
+- Exposes port 3000
+- Runs the application in development mode with `npm run dev`
+
 ## Architecture Decisions
 
 - **Next.js**: Chosen for its server-side rendering capabilities, API routes, and optimized performance
