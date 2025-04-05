@@ -17,7 +17,7 @@ const Navbar =async () => {
   const email=user?.emailAddresses[0].emailAddress;
   const userInfo=await fetchUser(email)
   if(userInfo?.connections?.length>=1){
-    console.log(userInfo?.connections?.length); 
+    console.log('From Navbar for notification:',userInfo?.connections?.length);
     notify=true
   }
   }

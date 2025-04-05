@@ -1,4 +1,5 @@
 import {z} from 'zod'
+
 const userFormValidationSchema = z.object({
     name: z.string().min(3, {
       message: "Name must be at least 3 characters.",
@@ -36,4 +37,14 @@ const userFormValidationSchema = z.object({
     }),
     profileimage:z.string().optional(),
   })
-  export default userFormValidationSchema;
+
+  const communityFormValidation=z.object({
+    communityName:z.string().min(3,{
+        message:'Community name must be at least 3 characters.'
+    }),
+    description:z.string().min(3,{
+        message:'Description must be at least 3 characters.'
+    })
+  })
+
+  export {communityFormValidation,userFormValidationSchema}

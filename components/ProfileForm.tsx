@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import userFormValidationSchema from "@/lib/validations"
+import {userFormValidationSchema} from "@/lib/validations"
 import { updateUser } from "@/lib/actions/user.actions"
 import { usePathname,useRouter } from "next/navigation"
 

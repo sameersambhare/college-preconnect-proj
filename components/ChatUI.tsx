@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import { pusherClient } from '@/lib/pusher'
 import { sendMessage, fetchMessages } from '@/lib/actions/message.actions'
@@ -21,9 +21,17 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
   const [selectedFriend, setSelectedFriend] = useState<User | null>(null)
   const [messages, setMessages] = useState<{ text: string; sender: string; receiver: string; createdAt: Date }[]>([])
   const [showFriendsList, setShowFriendsList] = useState(true);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
+  };
 
   const onSendMessage=async()=>{
-    if (!selectedFriend) return;
+    if (!selectedFriend || !message.trim()) return;
     const messageObj={
       text:message,
       sender:currentUserId,
@@ -31,17 +39,22 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
     }
     await sendMessage(messageObj)
     setMessage('')
+    setTimeout(scrollToBottom, 10);
   }
   useEffect(()=>{
-    pusherClient.subscribe('college-preconnect')
+    const senderid=currentUserId;
+    const receiverid=selectedFriend?._id;
+    const channelname=[senderid,receiverid].sort().join('-');
+    pusherClient.subscribe(channelname)
     pusherClient.bind('upcoming-message',(message: { text: string; sender: string; receiver: string; createdAt: Date })=>{
       setMessages((prev)=>[...prev,message])
+      setTimeout(scrollToBottom, 10);
     }) 
     return () => {
       pusherClient.unsubscribe('college-preconnect')
       pusherClient.unbind('upcoming-message')
     }
-  },[])
+  },[currentUserId, selectedFriend])
 
   useEffect(() => {
     const loadMessages = async () => {
@@ -52,6 +65,7 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
         if (window.innerWidth < 768) {
           setShowFriendsList(false);
         }
+        setTimeout(scrollToBottom, 10);
       }
     };
     loadMessages();
@@ -132,7 +146,15 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 p-4 overflow-y-auto">
+            <div 
+              ref={messagesContainerRef}
+              className="flex-1 p-4 overflow-y-auto" 
+              style={{ 
+                scrollBehavior: 'smooth', 
+                maxHeight: 'calc(100vh - 220px)',
+                height: 'auto'
+              }}
+            >
               <div className="space-y-4">
                 {messages.map((msg, index) => (
                   <div
@@ -180,11 +202,12 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
                     )}
                   </div>
                 ))}
+                <div ref={messagesEndRef} />
               </div>
             </div>
 
             {/* Message Input */}
-            <div className="p-4 border-t border-gray-200">
+            <div className="p-4 border-t border-gray-200 sticky bottom-0 bg-white">
               <div className="flex items-center gap-2">
                 <input
                   type="text"
@@ -192,7 +215,7 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
                   placeholder="Type a message..."
                   onChange={(e) => setMessage(e.target.value)}
                   onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
+                    if (e.key === 'Enter' && message.trim()) {
                       onSendMessage()
                     }
                   }}
@@ -201,6 +224,7 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
                 <button
                   className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600"
                   onClick={onSendMessage}
+                  disabled={!message.trim()}
                 >
                   Send
                 </button>
