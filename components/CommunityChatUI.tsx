@@ -8,8 +8,10 @@ interface Imessage{
     communityId:string,
     text:string,
   }
-
-const CommunityChatUI = (currentUserId:string) => {
+interface CommunityChatUIProps{
+  currentUserId:string,
+}
+const CommunityChatUI:React.FC<CommunityChatUIProps> = ({currentUserId}) => {
 const pathname=usePathname()
 const pathnameParts=pathname.split('/')
 const communityId=pathnameParts[2]

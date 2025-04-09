@@ -5,9 +5,8 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { fetchUser } from '@/lib/actions/user.actions';
 import { currentUser } from '@clerk/nextjs/server';
-import Image from 'next/image';
-
-const CommunityDetailsPage = async({params}:{params:{id:string}}) => {
+type tParams=Promise<{id:string}>
+const CommunityDetailsPage = async({params}:{params:tParams}) => {
     const {id} = await params;
     const community = await getCommunityInfo(id);
     

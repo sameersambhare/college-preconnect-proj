@@ -9,9 +9,10 @@ const page = async() => {
   if(!user) return null
   const email=user?.emailAddresses[0]?.emailAddress;
   const userInfo=await fetchUser(email)
+  const currentUserId=userInfo?._id;
   return (
     <div>
-      <CommunityChatUI currentUserId={userInfo._id}/>
+      <CommunityChatUI currentUserId={currentUserId}/>
     </div>
   )
 }
