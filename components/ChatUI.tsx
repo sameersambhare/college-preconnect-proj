@@ -101,7 +101,7 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
               >
                 <div className="relative w-12 h-12">
                   <Image
-                    src={friend.profileimage || "/assets/avatar.png"}
+                    src={friend.profileimage || "/static/assets/avatar.png"}
                     alt={friend.name}
                     fill
                     className="rounded-full object-cover"
@@ -133,7 +133,7 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
               </button>
               <div className="relative w-10 h-10">
                 <Image
-                  src={selectedFriend.profileimage || "/assets/avatar.png"}
+                  src={selectedFriend.profileimage || "/static/assets/avatar.png"}
                   alt={selectedFriend.name}
                   fill
                   className="rounded-full object-cover"
@@ -166,7 +166,7 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
                     {msg.sender !== currentUserId && (
                       <div className="relative w-8 h-8">
                         <Image
-                          src={selectedFriend?.profileimage || "/assets/avatar.png"}
+                          src={selectedFriend?.profileimage || "/static/assets/avatar.png"}
                           alt={selectedFriend?.name || "Receiver"}
                           fill
                           className="rounded-full object-cover"
@@ -193,7 +193,7 @@ export default function ChatUI({ friends, currentUserId }: ChatUIProps) {
                     {msg.sender === currentUserId && (
                       <div className="relative w-8 h-8">
                         <Image
-                          src={friends.find(f => f._id === currentUserId)?.profileimage || "/assets/avatar.png"}
+                          src={friends.find(f => f._id === currentUserId)?.profileimage || "/static/assets/avatar.png"}
                           alt="Sender"
                           fill
                           className="rounded-full object-cover"

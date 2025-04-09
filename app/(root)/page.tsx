@@ -36,7 +36,7 @@ const page = () => {
             </div>
           </div>
           <div className="image-box w-full md:w-1/2 md:h-screen mt-8 md:mt-0">
-            <Image src={'/assets/banner1.png'} alt='banner1' width={500} height={500} className="h-full w-full object-cover"></Image>
+            <Image src={'/static/assets/banner1.png'} alt='banner1' width={500} height={500} className="h-full w-full object-cover"></Image>
           </div>
         </section>
         {/*--------------------- Second Page----- ------------ */}
@@ -81,7 +81,7 @@ const page = () => {
             </div>
           </div>
           <div className="image-box w-full md:w-1/2 flex justify-center items-center">
-            <Image src={'/assets/banner3.png'} alt='banner2' width={700} height={700} className="max-w-full h-auto"></Image>
+            <Image src={'/static/assets/banner3.png'} alt='banner2' width={700} height={700} className="max-w-full h-auto"></Image>
           </div>
         </section>
         {/*--------------------- Fourth Page----- ------------ */}
@@ -96,7 +96,7 @@ const page = () => {
             </div>
           </div>
           <div className="image-box w-full pt-8 md:pt-16 flex justify-center items-baseline">
-            <Image src={'/assets/Banner4.png'} alt='student community' width={800} height={800} className="rounded-lg object-cover max-w-full h-auto"></Image>
+            <Image src={'/static/assets/Banner4.png'} alt='student community' width={800} height={800} className="rounded-lg object-cover max-w-full h-auto"></Image>
           </div>
         </section>
         {/*--------------------- Testimonials Section----- ------------ */}
@@ -114,7 +114,7 @@ const page = () => {
                 <p className="text-gray-600">Found my perfect roommate and study group in the first week. This platform made my transition to college so much easier!</p>
                 <div className="user flex items-center gap-3 mt-4">
                   <div className="avatar w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
-                    <Image src={'/assets/avatar.png'} alt='avatar1' width={50} height={50}></Image>
+                    <Image src={'/static/assets/avatar.png'} alt='avatar1' width={50} height={50}></Image>
                   </div>
                   <div className="user-info">
                     <h4 className="font-medium">Sarah J.</h4>
@@ -132,7 +132,7 @@ const page = () => {
                 <p className="text-gray-600">The community spaces helped me find study partners and friends with similar interests. Highly recommend!</p>
                 <div className="user flex items-center gap-3 mt-4">
                   <div className="avatar w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
-                  <Image src={'/assets/avatar.png'} alt='avatar1' width={50} height={50}></Image>
+                  <Image src={'/static/assets/avatar.png'} alt='avatar1' width={50} height={50}></Image>
                   </div>
                   <div className="user-info">
                     <h4 className="font-medium">Michael T.</h4>
@@ -150,7 +150,7 @@ const page = () => {
                 <p className="text-gray-600">The resource sharing feature saved me countless hours of research. This platform is a game-changer!</p>
                 <div className="user flex items-center gap-3 mt-4">
                   <div className="avatar w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
-                  <Image src={'/assets/avatar.png'} alt='avatar1' width={50} height={50}></Image>
+                  <Image src={'/static/assets/avatar.png'} alt='avatar1' width={50} height={50}></Image>
                   </div>
                   <div className="user-info">
                     <h4 className="font-medium">Jason K.</h4>

@@ -97,7 +97,7 @@ export default function StudentsClient({ initialUsers, currentUserId }: Students
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center shrink-0">
                       <Image 
-                        src={item.profileimage || "/assets/avatar.png"} 
+                        src={item.profileimage || "/static/assets/avatar.png"} 
                         alt={`${item.name}'s avatar`} 
                         width={40} 
                         height={40}
@@ -143,7 +143,7 @@ export default function StudentsClient({ initialUsers, currentUserId }: Students
                 <div className="hidden md:flex md:col-span-2 items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center shrink-0">
                     <Image 
-                      src={item.profileimage || "/assets/avatar.png"} 
+                      src={item.profileimage || "/static/assets/avatar.png"} 
                       alt={`${item.name}'s avatar`} 
                       width={30} 
                       height={30}
