@@ -41,23 +41,40 @@ const indianStates = Object.keys(stateToDistricts).map(state =>
   state.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
 )
 
-export function ProfileForm({email}:{email:string}) {
+export interface ProfileFormProps {
+  userData: {
+    onboarded?: boolean;
+    name?: string;
+    email?: string;
+    collegename?: string;
+    branch?: string;
+    mobile?: string;
+    address?: string;
+    city?: string;
+    state?: string;
+    gender?: string;
+    year?: number;
+    dob?: Date;
+    district?: string;
+  };
+}
+
+export function ProfileForm({ userData }: ProfileFormProps) {
   const form = useForm<z.infer<typeof userFormValidationSchema>>({
     resolver: zodResolver(userFormValidationSchema),
     defaultValues: {
-      name: "",
-      email: email,
-      collegename: "",
-      branch: "",
-      year: 1,
-      mobile: "",
-      address: "",
-      city: "",
-      state: "",
-      gender: "",
-      profileimage: "",
-      dob: "",
-      district: "",
+      name: userData?.onboarded? userData?.name : "",
+      email: userData?.onboarded? userData?.email : "",
+      collegename: userData?.onboarded? userData?.collegename : "",
+      branch: userData?.onboarded? userData?.branch : "",
+      year: userData?.onboarded? userData?.year : 1,
+      mobile: userData?.onboarded? userData?.mobile : "",
+      address: userData?.onboarded? userData?.address : "",
+      city: userData?.onboarded? userData?.city : "",
+      state: userData?.onboarded? userData?.state : "",
+      gender: userData?.onboarded? userData?.gender : "",
+      dob: userData?.onboarded && userData?.dob ? new Date(userData.dob).toISOString().split('T')[0] : "",
+      district: userData?.onboarded? userData?.district : "",
     },
   })
   const router = useRouter()
@@ -126,7 +143,7 @@ export function ProfileForm({email}:{email:string}) {
               <FormItem>
                 <FormLabel className="text-gray-700 font-medium">Email *</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your email" readOnly type="email" className="mt-1 border-gray-300 focus:border-orange-500 focus:ring focus:ring-orange-200 focus:ring-opacity-50" {...field} />
+                  <Input placeholder="Enter your email" type="email" className="mt-1 border-gray-300 focus:border-orange-500 focus:ring focus:ring-orange-200 focus:ring-opacity-50" {...field} />
                 </FormControl>
                 <FormDescription className="text-gray-600">
                   Your email address.

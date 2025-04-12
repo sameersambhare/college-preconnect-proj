@@ -7,9 +7,6 @@ import { fetchUser } from '@/lib/actions/user.actions';
 import { currentUser } from '@clerk/nextjs/server';
 type tParams=Promise<{id:string}>
 const CommunityDetailsPage = async({params}:{params:tParams}) => {
-    const {id} = await params;
-    const community = await getCommunityInfo(id);
-    
     // Get current user
     const user = await currentUser();
     let userInfo = null;
@@ -17,7 +14,8 @@ const CommunityDetailsPage = async({params}:{params:tParams}) => {
       const email = user.emailAddresses[0]?.emailAddress;
       userInfo = await fetchUser(email);
     }
-    
+    const {id} = await params;
+    const community = await getCommunityInfo(id,userInfo._id);
     // Check if user is a member
     const isMember = userInfo ? community.members.includes(userInfo._id) : false;
     

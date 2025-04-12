@@ -6,8 +6,6 @@ import {SignedIn} from '@clerk/nextjs'
 import { SignedOut } from '@clerk/nextjs'
 import { currentUser } from '@clerk/nextjs/server'
 import { fetchUser } from '@/lib/actions/user.actions'
-import { redirect } from 'next/navigation'
-
 
 const Navbar =async () => {
   let isLoggedin =false;

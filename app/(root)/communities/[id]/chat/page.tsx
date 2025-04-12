@@ -1,20 +1,46 @@
 "use server"
-import React from 'react'
 import { currentUser } from '@clerk/nextjs/server'
 import { fetchUser } from '@/lib/actions/user.actions'
 import CommunityChatUI from '@/components/CommunityChatUI'
+import { getCommunityInfo } from '@/lib/actions/community.actions'
 
-const page = async() => {
-  const user=await currentUser()
-  if(!user) return null
-  const email=user?.emailAddresses[0]?.emailAddress;
-  const userInfo=await fetchUser(email)
-  const currentUserId=userInfo?._id;
+export default async function CommunityChatPage({ params }: { params: { id: string } }) {
+  const { id } = await params;
+  
+  // Authenticate user
+  const user = await currentUser();
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
+  
+  // Get user data
+  const email = user.emailAddresses[0].emailAddress;
+  const userInfo = await fetchUser(email);
+  
+  if (!userInfo) {
+    throw new Error("User profile not found");
+  }
+  
+  // Verify community exists and user is a member
+  try {
+    const community = await getCommunityInfo(id, userInfo._id);
+    if (!community) {
+      throw new Error("Community not found");
+    }
+    
+    // Check if user is a member
+    if (!community.members.includes(userInfo._id)) {
+      // Redirect to join page or show a different component
+      // For now, we'll still render the chat component and let it handle access control
+    }
+  } catch (error) {
+    console.error("Error verifying community access:", error);
+    // Handle error or redirect
+  }
+  
   return (
-    <div>
-      <CommunityChatUI currentUserId={currentUserId}/>
+    <div className="min-h-screen">
+      <CommunityChatUI currentUserId={userInfo._id} />
     </div>
-  )
+  );
 }
-
-export default page

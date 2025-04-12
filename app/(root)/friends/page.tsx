@@ -74,7 +74,9 @@ const FriendsPage = async () => {
                 </Link>
                 
                 <Button variant="ghost" size="sm" className="text-xs text-red-500">
+                  <Link href={`/chats`}>
                   Message
+                  </Link>
                 </Button>
               </div>
             </div>

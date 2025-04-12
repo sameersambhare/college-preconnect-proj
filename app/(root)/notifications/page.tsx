@@ -3,7 +3,6 @@ import React from 'react'
 import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { fetchNotifications, acceptConnectionRequest, declineConnectionRequest } from '@/lib/actions/user.actions';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { revalidatePath } from 'next/cache';

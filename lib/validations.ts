@@ -47,4 +47,16 @@ const userFormValidationSchema = z.object({
     })
   })
 
-  export {communityFormValidation,userFormValidationSchema}
+  const contactFormValidation=z.object({    
+    name:z.string().min(3,{
+        message:'Name must be at least 3 characters.'
+    }),
+    subject:z.string().min(3,{
+        message:'Subject must be at least 3 characters.'
+    }),
+    email:z.string().email(),
+    message:z.string().min(3,{
+        message:'Message must be at least 3 characters.'
+    })
+  })
+  export {communityFormValidation,userFormValidationSchema,contactFormValidation}

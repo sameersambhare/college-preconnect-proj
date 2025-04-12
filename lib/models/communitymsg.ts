@@ -1,24 +1,36 @@
-import mongoose from "mongoose";
+import { Schema, model, models, Document } from "mongoose";
 
-const communityMessageSchema = new mongoose.Schema({
-    communityId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Community',
-    },
-    text: {
-        type: String,
-        required: true,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-    sender: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
+interface ICommunityMsg extends Document {
+  communityId: string;
+  text: string;
+  sender: string;
+  senderName: string;
+  createdAt: Date;
+}
+
+const communityMsgSchema = new Schema<ICommunityMsg>({
+  communityId: {
+    type: String,
+    required: true,
+  },
+  text: {
+    type: String,
+    required: true,
+  },
+  sender: {
+    type: String,
+    required: true,
+  },
+  senderName: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
-const communityMsgModel = mongoose.models.CommunityMessage || mongoose.model("CommunityMessage", communityMessageSchema);
+
+const communityMsgModel = models.CommunityMsg || model("CommunityMsg", communityMsgSchema);
 
 export default communityMsgModel;
