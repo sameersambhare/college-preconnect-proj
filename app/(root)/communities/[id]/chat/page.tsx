@@ -3,8 +3,8 @@ import { currentUser } from '@clerk/nextjs/server'
 import { fetchUser } from '@/lib/actions/user.actions'
 import CommunityChatUI from '@/components/CommunityChatUI'
 import { getCommunityInfo } from '@/lib/actions/community.actions'
-
-export default async function CommunityChatPage({ params }: { params: { id: string } }) {
+type tParams=Promise<{id:string}>
+export default async function CommunityChatPage({params}:{params:tParams}) {
   const { id } = await params;
   
   // Authenticate user
