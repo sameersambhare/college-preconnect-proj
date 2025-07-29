@@ -3,8 +3,9 @@ import CommunityJoin from '@/components/CommunityJoin';
 import { currentUser } from '@clerk/nextjs/server';
 import { fetchUser} from '@/lib/actions/user.actions';
 
-export default async function CommunityJoinPage({ params }: { params: { id: string } }) {
-  const { id } = params;
+type tParams=Promise<{ id: string }>
+export default async function CommunityJoinPage({ params }: { params: tParams  }) {
+  const { id } = await params;
   const user = await currentUser();
   
   if (!user) {
